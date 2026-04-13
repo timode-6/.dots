@@ -17,135 +17,169 @@
 ;==========================================================
 
 [colors]
-background = #2E3440
+background = #282A2E
+window-background = #DE282A2E
 background-alt = #373B41
+border-color = #0027A1B9
 foreground = #C5C8C6
-primary = #88C0D0
-secondary = #81A1C1
-alert = #A54232
+primary = #88c0d0
+secondary = #8ABEB7
+alert = #A54242
 disabled = #707880
+aurora-blue = #27A1B9
+aurora-orange = #FF9535
+aurora-yellow = #FFFDBB
+aurora-green = #53E8D4
+aurora-violet = #8921C2
+nord-background = #4c566a
 
 [bar/mybar]
+monitor = DP-0
 width = 100%
-height = 20pt
-radius = 10.0
-
+height = 25pt
+radius = 10
+fixed-center = true
+background = ${colors.window-background}
 foreground = ${colors.foreground}
-background = ${colors.background}
-
-; Under-/overline pixel size and argb color
-; Individual values can be defined using:
-;   {overline,underline}-size
-;   {overline,underline}-color
 line-size = 3pt
-
-border-size = 4pt
-border-color = #000000000
-
+border-size = 2.5pt
+border-color = ${colors.border-color}
 padding-left = 0
-padding-right = 1
-
+padding-right = 0
 module-margin = 1
-
-separator = |
+separator = "|"
 separator-foreground = ${colors.disabled}
-
-font-0 = monospace;2
-
-modules-left = xworkspace xwindow
-modules-right = filesystem memory wlan eth pulseaudio battery xkeyboard date
-
+font-0 = "JetBrains Mono:size=10;3"
+font-1 = monospace;2
+font-2 = "FiraCode Nerd Font:size=11;2"
+font-3 = "Symbols Nerd Font:size=20;4"
+modules-left = mymenu ewmh filesystem tray xwindow
+modules-center = date
+modules-right = pulseaudio xkeyboard memory cpu wlan magic-click sessionLogout
 cursor-click = pointer
 cursor-scroll = ns-resize
-
 enable-ipc = true
 
-;font-0 = Hack:pixelsize=9;3
-;font-2 = "Wuncon Siji:pixelsize=10;3"
-;font-1 = Weather Icons:style=Regular:size=10;2
-;font-3 = FontAwesome5Free:style=Solid:pixelsize=10;3
-;font-4 = FontAwesome5Brands:style=Solid:pixelsize=10;3
-;
-;
-;modules-left = i3 sp2 info-hackspeed sp2
-;modules-right = weather sp1 linux-ver sp1 updates sp2 date sp2
-;
-;tray-position = right
-;tray-padding = 0
-;tray-detached = false
-;tray-maxsize = 14
-;tray-scale = 1.0
-;tray-background = ${colors.background-alt}
-;tray-foreground = ${colors.foreground-alt}
-;tray-offset-x = 0
-;tray-offset-y = 0
-;
-;wm-restack = i3
-;
-;scroll-up = #i3.next
-;scroll-down = #i3.prev
-;
-;cursor-click = pointer
+[module/tray]
+type = internal/tray
+format = <tray>
+format-margin = 5pt
+tray-spacing = 8px
+tray-padding = 0px
+tray-size = 65%
 
-[module/xworkspaces]
-type = internal/xworkpaces
-
-label-active = %name%
+[module/ewmh]
+type = internal/xworkspaces
+icon-0 = 1;
+icon-1 = 2;󰚢
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+icon-default = 
+format = <label-state>
+format-font = 3
+#group-by-monitor = false
+#pin-workspaces = false
+label-active = %icon%
 label-active-background = ${colors.background-alt}
-label-active-underline = ${colors.primary}
-label-active-padding = 1
-
-label-occupied = %name%
+label-active-forground = #00000000
+label-active-padding = 2
+label-occupied = %icon%
 label-occupied-padding = 1
-
-label-urgent = %name%
-label-urgent-background = ${colors.alert}
+label-urgent = %icon%
+label-urgent-background = ${colors.primary}
 label-urgent-padding = 1
-
-label-empty = %name%
-label-empty-foreground = ${color.disabled}
+label-empty = %icon%
+label-empty-foreground = ${colors.disabled}
 label-empty-padding = 1
+
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:25:...%
+label = %class:0:60:...%
+label-maxlen = 20
+padding = 5
 
 [module/filesystem]
 type = internal/fs
 interval = 25
-
 mount-0 = /
-
-label-mounted = %{F#F0C674}%mountpoint%%{F-} %percentage_used%
-
+label-mounted = %{F#F0C674}%mountpoint%%{F-} %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.disabled}
 
 [module/pulseaudio]
 type = internal/pulseaudio
-
 format-volume-prefix-foreground = ${colors.primary}
-format-volume = <label-volume>
-
-label-volume = %{T1}%{T-} %percentage%%
-
-label-muted = %{T1}%{T-} muted
+format-volume = <label-volume> <ramp-volume>
+label-volume = %percentage%%
+use-ui-max = false
+click-right = pavucontrol
+label-muted = " Mute"
 label-muted-foreground = ${colors.disabled}
+format-muted = <label-muted>
+format-muted-prefix = 󰝟
+format-muted-prefix-font = 2
+format-muted-padding = 1
 
+; Ramp settings using <ramp-volume> used for Pulseaudio
+ramp-volume-0 = 󰝟
+ramp-volume-1 = "%{F#53E8D4} "
+ramp-volume-2 = "%{F#53E8D4} "
+ramp-volume-3 = "%{F#53E8D4} "
+ramp-volume-4 = "%{F#53E8D4} "
+ramp-volume-5 = "%{F#FFFDBB} "
+ramp-volume-6 = "%{F#FFFDBB} "
+ramp-volume-7 = "%{F#FFFDBB} "
+ramp-volume-8 = "%{F#BF616A} "
+ramp-volume-9 = "%{F#BF616A} "
+ramp-volume-font = 2
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+format = <label-layout> <label-indicator>
+format-prefix = "󰌌 "
+format-prefix-font = 2
+format-prefix-foreground = ${colors.aurora-violet}
+format-padding = 1
+label-layout = "%{F#C5C8C6}%layout%%{F-}"
+label-layout-padding = 1
+label-indicator-on-capslock = "  %{F#A54242}CAPS%{F-}"
+label-indicator-off-capslock =
+label-indicator-on-capslock-padding = 1
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "RAM "
+format-prefix = "    RAM:"
+;format-prefix-font = 4
+format-padding = 0.5
+format-prefix-foreground = ${colors.aurora-orange}
+label = "%percentage_used%%"
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "    CPU:"
+;format-prefix-font = 4
+format-padding = 0.5
 format-prefix-foreground = ${colors.primary}
-label = %percentage_used:2%%
+label = "%percentage%%"
+
 
 [network-base]
 type = internal/network
 interval = 5
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-label-disconnected = 
+label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
 
 [module/wlan]
 inherit = network-base
@@ -155,73 +189,103 @@ label-connected = %{F#F0C674}%ifname%%{F-} %essid% %local_ip%
 [module/eth]
 inherit = network-base
 interface-type = wired
-label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
-
-[module/battery]
-type = internal/battery
-
-; This is useful in case the battery never reports 100% charge
-; Default: 100
-full-at = 90
-
-; format-low once this charge percentage is reached
-; Default: 10
-; New in version 3.6.0
-low-at = 20
-
-; Use the following command to list batteries and adapters:
-; $ ls -1 /sys/class/power_suppl/
-battery = BAT1
-adapter = ACAD
-
-; If an inotify event haven't been reported in this many
-; seconds, manually poll for new values.
-;
-; Needed as a fallback for systems that don't report events
-; on sysfs/procfs.
-;
-; Disable polling by setting the interval to 0.
-;
-; Default: 5
-poll-interval = 5
-
-label-charging = %{F#A3BE8C}%{T1} %{T-}%percentage%%
-
-label-discharging = %{F#F0C674}%{T1} %{T-}%percentage%%
-
-label-full = %{F#A3BE8C}%{T1}%{T-} %percentage_raw%%
-
-label-low = %{F#BF616A}%{T1}%{T-} %percentage%%
-
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-
-label-layout = %layout%
-label-layout-foreground = ${colors.primary}
-
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-foreground = ${colors.background}
-label-indicator-background = ${colors.secondary}
-
-[module/popup-calendar]
-type = custom/script
-exec = ~/.config/polybar/scripts/popup-calendar.sh
-interval = 5
-click-left = ~/.config/polybar/scripts/popup-calendar.sh --popup & 
+label-connected = "%{F#53E8D4} %{F-}%downspeed:2% %{F#FF9535} %{F-}%upspeed:2%"
+speed-unit = b/s
+ping-intervel = 1
+format-connected = <label-connected>
+;format-connected-prefix = "󰓅  "
+format-connected-prefix-font = 1
+format-connected-padding = 1
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = "󰈂 "
+format-disconnected-prefix-font = 2
+format-disconnected-padding = 1
 
 [module/date]
 type = internal/date
 interval = 1
-
-date = %H:%M
-date-alt = %Y-%m-%d
-
+date = %I:%M %p
+date-alt = "%{F#FF9535}%Y-%m-%d %I:%M:%S %p%{F-}"
 label = %date%
-label-foreground = ${colors.primary}
+label-font = 5
+label-foreground = ${colors.aurora-yellow}
+format = <label>
+format-prefix = "󱑂 "
+format-prefix-font = 2
+click-left = polybar-msg action "#date" module_toggle  
+click-middle = bash /home/$USER/.config/polybar/rofi-calendar.sh
 
 [settings]
 screenchange-reload = true
 pseudo-transparency = true
+
+[module/temperature]
+type = internal/temperature
+interval = 0.5
+thermal-zone = 1
+zone-type = x86_pkg_temp
+hwmon-path = cat /sys/class/hwmon/hwmon*/temp1_input
+warn-temperature = 60
+units = true
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+label = %temperature-c%
+label-warn = "%temperature-c%"
+label-foreground = ${colors.aurora-green}
+; Showing a ramp for increased Temperature.
+ramp-0 = "%{F#25C4F8}"
+ramp-1 = "%{F#25C4F8}"
+ramp-2 = "%{F#25C4F8}"
+ramp-3 = "%{F#25C4F8}"
+ramp-4 = "%{F#FFFDBB}"
+ramp-5 = "%{F#FFFDBB}"
+ramp-6 = "%{F#FFFDBB}"
+ramp-7 = "%{F#FFFDBB}"
+ramp-8 = "%{F#BF616A}"
+ramp-9 = "%{F#BF616A}"
+ramp-font = 7
+
+[module/mymenu]
+type = custom/text
+format = <label>
+format-padding = 2
+label = "%{F#1A1B26}Menu%{F-}"
+click-left = bash /home/$USER/.config/polybar/rofi.sh
+format-background = ${colors.aurora-blue}
+
+[module/sessionLogout]
+type = custom/text
+format = <label>
+format-padding = 1
+label = "%{F#C5C8C6}⭘%{F-}"
+click-left = bash /home/$USER/.config/polybar/logout.sh
+format-background = ${colors.aurora-blue}
+
+[module/pacupdate]
+type = custom/script
+exec = bash /home/$USER/.config/polybar/pacupdates.sh
+interval = 1000
+label = %output%
+format-font = 3
+click-left = notify-send "Updates:" "$(checkupdates)"
+
+[module/magic-click]
+type = custom/text
+format = <label>
+label = " Magic"
+click-left = notify-send "Kernel: $(uname -r)"
+click-middle = notify-send "Uptime: " "$(uptime -p)"
+click-right = alacritty --working-directory=/home/$USER
+
+
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+#enable-click = false
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = true
 
