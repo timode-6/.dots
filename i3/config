@@ -138,8 +138,8 @@ bindsym $mod+r mode "resize"
 #
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-# class                 border  backgr.   text    indicator child_border
-client.focused          #80000000 #50000000 #ffffff #000000   #000000
+# class                 border      backgr.     text      indicator   child_border
+client.focused          #80000000 #50000000 #ffffff #27A1B9   #27A1B9
 client.focused_inactive #80000000 #50000000 #ffffff #000000   #000000
 client.unfocused        #80000000 #50000000 #888888 #000000   #000000
 client.urgent           #80000000 #50000000 #ffffff #000000   #000000
@@ -229,7 +229,7 @@ bindsym $mod+l exec betterlockscreen --lock blur
 exec xrandr --output HDMI-1 --mode 1920x1080 --rate 60 --scale 1x1
 #exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
 
-exec feh --bg-fill ~/.config/i3/wallpaper.png
+exec feh --bg-fill ~/.config/i3/wallpaper.jpg
 
 exec --no-startup-id dunst
 exec --no-startup-id picom
