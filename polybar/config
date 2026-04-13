@@ -1,0 +1,227 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #2E3440
+background-alt = #373B41
+foreground = #C5C8C6
+primary = #88C0D0
+secondary = #81A1C1
+alert = #A54232
+disabled = #707880
+
+[bar/mybar]
+width = 100%
+height = 20pt
+radius = 10.0
+
+foreground = ${colors.foreground}
+background = ${colors.background}
+
+; Under-/overline pixel size and argb color
+; Individual values can be defined using:
+;   {overline,underline}-size
+;   {overline,underline}-color
+line-size = 3pt
+
+border-size = 4pt
+border-color = #000000000
+
+padding-left = 0
+padding-right = 1
+
+module-margin = 1
+
+separator = |
+separator-foreground = ${colors.disabled}
+
+font-0 = monospace;2
+
+modules-left = xworkspace xwindow
+modules-right = filesystem memory wlan eth pulseaudio battery xkeyboard date
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+enable-ipc = true
+
+;font-0 = Hack:pixelsize=9;3
+;font-2 = "Wuncon Siji:pixelsize=10;3"
+;font-1 = Weather Icons:style=Regular:size=10;2
+;font-3 = FontAwesome5Free:style=Solid:pixelsize=10;3
+;font-4 = FontAwesome5Brands:style=Solid:pixelsize=10;3
+;
+;
+;modules-left = i3 sp2 info-hackspeed sp2
+;modules-right = weather sp1 linux-ver sp1 updates sp2 date sp2
+;
+;tray-position = right
+;tray-padding = 0
+;tray-detached = false
+;tray-maxsize = 14
+;tray-scale = 1.0
+;tray-background = ${colors.background-alt}
+;tray-foreground = ${colors.foreground-alt}
+;tray-offset-x = 0
+;tray-offset-y = 0
+;
+;wm-restack = i3
+;
+;scroll-up = #i3.next
+;scroll-down = #i3.prev
+;
+;cursor-click = pointer
+
+[module/xworkspaces]
+type = internal/xworkpaces
+
+label-active = %name%
+label-active-background = ${colors.background-alt}
+label-active-underline = ${colors.primary}
+label-active-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+
+label-urgent = %name%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %name%
+label-empty-foreground = ${color.disabled}
+label-empty-padding = 1
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:25:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#F0C674}%mountpoint%%{F-} %percentage_used%
+
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.disabled}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume-prefix-foreground = ${colors.primary}
+format-volume = <label-volume>
+
+label-volume = %{T1}%{T-} %percentage%%
+
+label-muted = %{T1}%{T-} muted
+label-muted-foreground = ${colors.disabled}
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.primary}
+label = %percentage_used:2%%
+
+[network-base]
+type = internal/network
+interval = 5
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-disconnected = 
+
+[module/wlan]
+inherit = network-base
+interface-type = wireless
+label-connected = %{F#F0C674}%ifname%%{F-} %essid% %local_ip%
+
+[module/eth]
+inherit = network-base
+interface-type = wired
+label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+; Default: 100
+full-at = 90
+
+; format-low once this charge percentage is reached
+; Default: 10
+; New in version 3.6.0
+low-at = 20
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_suppl/
+battery = BAT1
+adapter = ACAD
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+label-charging = %{F#A3BE8C}%{T1} %{T-}%percentage%%
+
+label-discharging = %{F#F0C674}%{T1} %{T-}%percentage%%
+
+label-full = %{F#A3BE8C}%{T1}%{T-} %percentage_raw%%
+
+label-low = %{F#BF616A}%{T1}%{T-} %percentage%%
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+label-layout = %layout%
+label-layout-foreground = ${colors.primary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-foreground = ${colors.background}
+label-indicator-background = ${colors.secondary}
+
+[module/popup-calendar]
+type = custom/script
+exec = ~/.config/polybar/scripts/popup-calendar.sh
+interval = 5
+click-left = ~/.config/polybar/scripts/popup-calendar.sh --popup & 
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = %H:%M
+date-alt = %Y-%m-%d
+
+label = %date%
+label-foreground = ${colors.primary}
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = true
+
