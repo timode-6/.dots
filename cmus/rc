@@ -1,0 +1,24 @@
+set altformat_current=%F
+set altformat_playlist=%f%= %d
+
+set color_win_bg=default
+set color_win_fg=default
+set color_win_title_bg=default
+set color_win_title_fg=cyan
+set color_separator=gray
+
+set color_statusline_bg=black
+set color_statusline_fg=cyan
+
+set color_cmdline_bg=black
+set color_cmdline_fg=default
+
+set color_statusline_progress_bg=black
+set color_statusline_progress_fg=cyan
+
+set color_win_sel_bg=black
+set color_win_sel_fg=cyan
+
+set color_win_cur=cyan
+set color_win_cur_sel_bg=black
+set color_win_cur_sel_fg=cyan
