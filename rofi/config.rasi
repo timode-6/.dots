@@ -1,7 +1,6 @@
 configuration {
     modi                :   "drun,filebrowser,calc,window";
-    show-icons          :                             true;
-    /*kb-mode-next        :            "Super+Control+space";*/
+    show-icons          :                            false;
     display-drun        :                           "Apps";
     display-filebrowser :                          "Files";
     display-calc        :                           "Calc";
@@ -14,46 +13,54 @@ configuration {
       directories-first :       true;
       show-hidden       :       true;
       cancel-returns-1  :       true;
-      }
-  
+    }
 }
 
 * {
-    window-background   :   #181F28;
-    shaded-dark-one     :   #1D1F21;
-    shaded-dark-two     :   #585E6C;
-    shaded-dark-three   :   #1A1B26;
-    shaded-dark-four    :   #2E3440;
-    shaded-dark-five    :   #23273A;
-    shaded-light        :   #F9F9F9;
-    light-blue          :   #9BCBDA;
-    teal-blue           :   #27A1B9;
-    neon-blue           :   #4491ED;
-    neon-red            :   #F4364C;
-    text-color          :   #C4CBD4;
+    window-background   :   #282A2ECC;
 
+    glass-bg            :   rgba(136, 203, 218, 0.06);
+    glass-bg-hover      :   rgba(39, 161, 185, 0.22);
+    glass-border        :   rgba(136, 203, 218, 0.14);
+    glass-border-bright :   rgba(39, 161, 185, 0.55);
+
+    shaded-dark-two     :   #4C566A;
+    neon-blue           :   #27A1B9;
+    shaded-light        :   #FFFFFF;
+    aurora-blue         :   #27A1B9;
+    aurora-blue-light   :   #53C8E0;
+    aurora-green        :   #53E8D4;
+    nord-frost          :   #88C0D0;
+    nord-bg             :   #4C566A;
+    neon-red            :   #A54242;
+    text-color          :   #C5C8C6;
 }
+
 window {
     background-color    :       @window-background;
-    padding             :                        5;
-    border-radius       :                       15;
+    padding             :                       15;
+    border-radius       :                       16;
     width               :                      25%;
     height              :                      60%;
     transparency        :                   "real";
     y-offset            :                       10;
+    
+    border              :                        1px;
+    border-color        :            @glass-border;
 }
+
 mainbox {
     border              :                                                         0;
     padding             :                                                         0;
     children            :      ["inputbar", "message", "listview", "mode-switcher"];
     orientation         :                                                  vertical;
     spacing             :                                                         10;
+    background-color    :                                              transparent;
 }
 
 message {
-    border              :       0px 0px 0px ;
-    border-color        :   @shaded-dark-one;
-    padding             :               1px ;
+    border              :       0px;
+    padding             :               1px;
 }
 
 textbox {
@@ -67,24 +74,27 @@ listview {
     padding             :               10px;
     border-radius       :               10px;
     columns             :                  1;
+    background-color    :        transparent;
 }
 
 element {
-    border-radius       :                                  5px;
-    padding             :                                  5px;
+    border-radius       :                                 10px;
+    padding             :                                  8px;
     padding-left        :                                 10px;
     orientation         :                           horizontal;
-    margin-left         :                                 15px;
+    margin-left         :                                  0px;
     children            :       [ element-icon, element-text ];
-    spacing             :                                  5px;
-    border-color        :                          @light-blue;
+    spacing             :                                 10px;
     background-color    :                          transparent;
 }
 
 element-text {
     background-color    :         transparent;
     text-color          :             inherit;
-    padding             :                 5px;
+}
+
+element-icon {
+    size : 0px;
 }
 
 element.normal.normal {
@@ -102,10 +112,11 @@ element.normal.active {
 }
 
 element.selected.normal {
-    background-color    :  @shaded-dark-three;
-    text-color          :         @light-blue;
-    border-color        :          @teal-blue;
-    border-radius       :                12px;
+    background-color    :          @glass-bg-hover;
+    text-color          :              #FFFFFF;
+    border              :                  1px;
+    border-color        : @glass-border-bright;
+    border-radius       :                 10px;
 }
 
 element.selected.urgent {
@@ -148,32 +159,30 @@ scrollbar {
 mode-switcher {
     enabled             :                true;
     border              :                 0px;
-    border-color        :         @text-color;
-    border-radius       :                10px;
     spacing             :                 5px;
-    width               :               200px;
 }
 
 button {
-    padding             :                 5px;
+    padding             :                 8px;
     border-radius       :                10px;
     text-color          :         @text-color;
-    background-color    :   @shaded-dark-four;
+    background-color    :            @glass-bg;
+    border              :                 1px;
+    border-color        :        @glass-border;
 }
 
 button.selected {
-    background-color    :         @light-blue;
-    text-color          :   @shaded-dark-four;
+    background-color    :      @glass-bg-hover;
+    text-color          :             #FFFFFF;
+    border-color        : @glass-border-bright;
 }
-
 
 inputbar {
     spacing             :                                                    0;
     text-color          :                                          @text-color;
-    padding             :                                      5px 5px 5px 5px;
+    padding             :                                                  5px;
     background-color    :                                          transparent;
-    border-radius       :                                                  5px;
-    margin              :                                      5px 5px 5px 5px;
+    margin              :                                                  5px;
     children            :   [prompt,textbox-prompt-colon,entry,case-indicator];
 }
 
@@ -184,21 +193,24 @@ case-indicator {
 
 entry {
     spacing             :                   0;
-    background-color    :   @shaded-dark-five;
-    border-radius       :                 5px;
-    padding             :                10px;
-    text-color          :         @text-color;
-    placeholder         :       "Search Apps";
+    background-color    :             @glass-bg;
+    border              :                   1px;
+    border-color        :         @glass-border;
+    border-radius       :                  10px;
+    padding             :                  10px;
+    text-color          :               #FFFFFF;
+    placeholder         :         "Search Apps";
+    placeholder-color   :               #888888;
 }
 
 prompt {
     spacing             :                   0;
     text-color          :         @text-color;
-    padding             :                 5px;
+    padding             :                 8px;
 }
 
 textbox-prompt-colon {
-    padding             :                 5px;
+    padding             :                 8px;
     margin              :  0px 0.3em 0em 0em ;
     text-color          :         @text-color;
 }
