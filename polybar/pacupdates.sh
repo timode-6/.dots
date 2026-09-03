@@ -4,17 +4,17 @@ green="#53E8D4"
 yellow="#FFFDBB"
 red="#A54242"
 
-# Get the number of available updates
-updates=$(checkupdates --nocolor | wc -l)
-
-# Determine the color based on the number of updates
-if [ "$updates" -eq 0 ]; then
-    color="$green"
-elif [ "$updates" -le 10 ]; then
-    color="$yellow"
+if updates=$(checkupdates --nocolor 2>/dev/null); then
+    count=$(echo "$updates" | sed '/^\s*$/d' | wc -l)
+    
+    if [ "$count" -eq 0 ]; then
+        color="$green"
+    elif [ "$count" -le 10 ]; then
+        color="$yellow"
+    else
+        color="$red"
+    fi
+    echo -e " Up: $count"
 else
-    color="$red"
+    echo -e " Up: Offline" 
 fi
-
-# Output the result in Polybar format with the selected color
-echo -e " Up: $updates"

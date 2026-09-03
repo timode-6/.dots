@@ -39,7 +39,7 @@ for ext in "${VALID_EXTS[@]}"; do
 done
 
 SELECTION=$(echo -e -n "$ROFI_OPTIONS" | rofi -dmenu -i \
-    -p "🌌 Wallpapers" \
+    -p "Wallpapers" \
     -theme-str 'window { width: 60%; height: 70%; } listview { columns: 4; lines: 3; spacing: 15px; } element { orientation: vertical; padding: 12px; } element-icon { size: 110px; horizontal-align: 0.5; } element-text { horizontal-align: 0.5; }')
 
 if [ -n "$SELECTION" ]; then
@@ -49,5 +49,10 @@ if [ -n "$SELECTION" ]; then
     
     echo "$FULL_PATH" > "$HOME/.current_wallpaper"
     
-    notify-send "Wallappers changed" "Set up: $SELECTION" --icon="$CACHE_DIR/${SELECTION%.*}.png" -a "System"
+    "$HOME/.config/betterlockscreen/compose-lockscreen.sh" \
+        -w "$FULL_PATH" \
+        -a "$HOME/Pictures/Photos/me.jpg" \
+        -n "Timo" &
+    
+    notify-send "Wallpapers changed" "Set up: $SELECTION" --icon="$CACHE_DIR/${SELECTION%.*}.png" -a "System"
 fi

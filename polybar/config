@@ -27,6 +27,8 @@ secondary = #8ABEB7
 alert = #A54242
 disabled = #707880
 aurora-blue = #27A1B9
+aurora-blue-dark  = #1F8296
+aurora-blue-light = #53C8E0
 aurora-orange = #FF9535
 aurora-yellow = #FFFDBB
 aurora-green = #53E8D4
@@ -53,9 +55,9 @@ font-0 = "JetBrains Mono:size=10;3"
 font-1 = monospace;2
 font-2 = "FiraCode Nerd Font:size=11;2"
 font-3 = "Symbols Nerd Font:size=20;4"
-modules-left = mymenu ewmh filesystem tray xwindow
+modules-left = pacupdate docker k8s ewmh filesystem tray xwindow
 modules-center = date
-modules-right = pulseaudio xkeyboard memory cpu wlan magic-click sessionLogout
+modules-right = pulseaudio xkeyboard memory cpu wlan battery
 cursor-click = pointer
 cursor-scroll = ns-resize
 enable-ipc = true
@@ -70,17 +72,17 @@ tray-size = 65%
 
 [module/ewmh]
 type = internal/xworkspaces
-icon-0 = 1;
+icon-0 = 1;
 icon-1 = 2;󰚢
-icon-2 = 3;
-icon-3 = 4;
-icon-4 = 5;
-icon-5 = 6;
-icon-6 = 7;
-icon-7 = 8;
-icon-8 = 9;
-icon-9 = 10;
-icon-default = 
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+icon-default = 
 format = <label-state>
 format-font = 3
 #group-by-monitor = false
@@ -129,15 +131,15 @@ format-muted-padding = 1
 
 ; Ramp settings using <ramp-volume> used for Pulseaudio
 ramp-volume-0 = 󰝟
-ramp-volume-1 = "%{F#53E8D4} "
-ramp-volume-2 = "%{F#53E8D4} "
-ramp-volume-3 = "%{F#53E8D4} "
-ramp-volume-4 = "%{F#53E8D4} "
-ramp-volume-5 = "%{F#FFFDBB} "
-ramp-volume-6 = "%{F#FFFDBB} "
-ramp-volume-7 = "%{F#FFFDBB} "
-ramp-volume-8 = "%{F#BF616A} "
-ramp-volume-9 = "%{F#BF616A} "
+ramp-volume-1 = "%{F#53E8D4} "
+ramp-volume-2 = "%{F#53E8D4} "
+ramp-volume-3 = "%{F#53E8D4} "
+ramp-volume-4 = "%{F#53E8D4} "
+ramp-volume-5 = "%{F#FFFDBB} "
+ramp-volume-6 = "%{F#FFFDBB} "
+ramp-volume-7 = "%{F#FFFDBB} "
+ramp-volume-8 = "%{F#BF616A} "
+ramp-volume-9 = "%{F#BF616A} "
 ramp-volume-font = 2
 
 [module/xkeyboard]
@@ -147,30 +149,30 @@ blacklist-1 = scroll lock
 format = <label-layout> <label-indicator>
 format-prefix = "󰌌 "
 format-prefix-font = 2
-format-prefix-foreground = ${colors.aurora-violet}
-format-padding = 1
+format-prefix-foreground = ${colors.aurora-blue}
+format-padding = 0
 label-layout = "%{F#C5C8C6}%layout%%{F-}"
 label-layout-padding = 1
-label-indicator-on-capslock = "  %{F#A54242}CAPS%{F-}"
+label-indicator-on-capslock = " %{F#A54242}CAPS%{F-}"
 label-indicator-off-capslock =
-label-indicator-on-capslock-padding = 1
+label-indicator-on-capslock-padding = 0
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "    RAM:"
+format-prefix = " RAM:"
 ;format-prefix-font = 4
 format-padding = 0.5
-format-prefix-foreground = ${colors.aurora-orange}
+format-prefix-foreground = ${colors.aurora-blue}
 label = "%percentage_used%%"
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "    CPU:"
+format-prefix = " CPU:"
 ;format-prefix-font = 4
-format-padding = 0.5
-format-prefix-foreground = ${colors.primary}
+format-padding = 0.2
+format-prefix-foreground = ${colors.aurora-blue}
 label = "%percentage%%"
 
 
@@ -184,12 +186,12 @@ label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
 [module/wlan]
 inherit = network-base
 interface-type = wireless
-label-connected = %{F#F0C674}%ifname%%{F-} %essid% %local_ip%
+label-connected = %{F#27A1B9}%ifname%%{F-} %{F#79f8ee}%essid%%{F-} %local_ip%
 
 [module/eth]
 inherit = network-base
 interface-type = wired
-label-connected = "%{F#53E8D4} %{F-}%downspeed:2% %{F#FF9535} %{F-}%upspeed:2%"
+label-connected = "%{F#53E8D4} %{F-}%downspeed:2% %{F#FF9535} %{F-}%upspeed:2%"
 speed-unit = b/s
 ping-intervel = 1
 format-connected = <label-connected>
@@ -205,15 +207,15 @@ format-disconnected-padding = 1
 type = internal/date
 interval = 1
 date = %I:%M %p
-date-alt = "%{F#FF9535}%Y-%m-%d %I:%M:%S %p%{F-}"
+date-alt = "%{F#79f8ee}%Y-%m-%d %I:%M:%S %p%{F-}"
 label = %date%
 label-font = 5
-label-foreground = ${colors.aurora-yellow}
+label-foreground = ${colors.primary}
 format = <label>
-format-prefix = "󱑂 "
+format-prefix = "   "
 format-prefix-font = 2
-click-left = polybar-msg action "#date" module_toggle  
-click-middle = bash /home/$USER/.config/polybar/rofi-calendar.sh
+click-left = polybar-msg action "#date" module_toggle
+click-middle = /home/tim/.config/polybar/rofi-calendar.sh
 
 [settings]
 screenchange-reload = true
@@ -233,23 +235,23 @@ label = %temperature-c%
 label-warn = "%temperature-c%"
 label-foreground = ${colors.aurora-green}
 ; Showing a ramp for increased Temperature.
-ramp-0 = "%{F#25C4F8}"
-ramp-1 = "%{F#25C4F8}"
-ramp-2 = "%{F#25C4F8}"
-ramp-3 = "%{F#25C4F8}"
-ramp-4 = "%{F#FFFDBB}"
-ramp-5 = "%{F#FFFDBB}"
-ramp-6 = "%{F#FFFDBB}"
-ramp-7 = "%{F#FFFDBB}"
-ramp-8 = "%{F#BF616A}"
-ramp-9 = "%{F#BF616A}"
+ramp-0 = "%{F#25C4F8}"
+ramp-1 = "%{F#25C4F8}"
+ramp-2 = "%{F#25C4F8}"
+ramp-3 = "%{F#25C4F8}"
+ramp-4 = "%{F#FFFDBB}"
+ramp-5 = "%{F#FFFDBB}"
+ramp-6 = "%{F#FFFDBB}"
+ramp-7 = "%{F#FFFDBB}"
+ramp-8 = "%{F#BF616A}"
+ramp-9 = "%{F#BF616A}"
 ramp-font = 7
 
 [module/mymenu]
 type = custom/text
 format = <label>
 format-padding = 2
-label = "%{F#1A1B26}Menu%{F-}"
+label = "%{F#1A1B26}Menu%{F-}"
 click-left = bash /home/$USER/.config/polybar/rofi.sh
 format-background = ${colors.aurora-blue}
 
@@ -267,12 +269,12 @@ exec = bash /home/$USER/.config/polybar/pacupdates.sh
 interval = 1000
 label = %output%
 format-font = 3
-click-left = notify-send "Updates:" "$(checkupdates)"
+click-left = notify-send "Updates:" "$(checkupdates 2>/dev/null || echo 'No internet connection')"
 
 [module/magic-click]
 type = custom/text
 format = <label>
-label = " Magic"
+label = " Magic"
 click-left = notify-send "Kernel: $(uname -r)"
 click-middle = notify-send "Uptime: " "$(uptime -p)"
 click-right = alacritty --working-directory=/home/$USER
@@ -289,3 +291,62 @@ wrapping-scroll = false
 reverse-scroll = false
 fuzzy-match = true
 
+[module/docker]
+type = custom/script
+exec = echo "󰡨 $(docker ps -q 2>/dev/null | wc -l)"
+interval = 5
+;format-foreground = ${colors.aurora-blue}
+format-prefix-foreground = ${colors.aurora-blue}
+click-left = alacritty -e docker ps
+
+[module/k8s]
+type = custom/script
+exec = echo "󱃾 $(kubectl config current-context 2>/dev/null | cut -c1-15)"
+interval = 10
+;format-foreground = ${colors.aurora-blue}
+click-left = alacritty -e kubectl get pods -A
+click-right = alacritty -e kubectl config get-contexts
+
+
+[module/battery]
+type = internal/battery
+full-at = 99
+
+battery = BAT0
+adapter = ADP0
+
+poll-interval = 5
+
+format-charging = %{T3}<animation-charging>%{T-} <label-charging>
+format-discharging = %{T3}<ramp-capacity>%{T-} <label-discharging>
+format-full = %{T3}<ramp-capacity>%{T-} <label-full>
+
+
+label-charging = "%percentage%%"
+label-discharging = "%percentage%%"
+label-full = " Full"
+
+label-charging-foreground = ${colors.aurora-green}
+label-discharging-foreground = ${colors.foreground}
+label-full-foreground = ${colors.aurora-green}
+
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+ramp-capacity-4 = " "
+ramp-capacity-font = 3
+ramp-capacity-0-foreground = ${colors.alert}
+ramp-capacity-1-foreground = ${colors.aurora-orange}
+ramp-capacity-2-foreground = ${colors.aurora-yellow}
+ramp-capacity-3-foreground = ${colors.aurora-blue}
+ramp-capacity-4-foreground = ${colors.aurora-green}
+
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+animation-charging-font = 3
+animation-charging-foreground = ${colors.aurora-green}
+animation-charging-framerate = 750
