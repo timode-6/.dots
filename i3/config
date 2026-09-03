@@ -139,10 +139,9 @@ bindsym $mod+r mode "resize"
 exec_always --no-startup-id bash ~/.config/polybar/polybar.sh
 
 # class                 border      backgr.     text      indicator   child_border
-client.focused          #27A1B9 #282A2EDE #C5C8C6 #27A1B9 #27A1B9
-client.focused_inactive #4C566A #282A2EAA #888888 #4C566A #4C566A
-client.unfocused        #4C566A #282A2EAA #888888 #4C566A #4C566A
-client.urgent           #A54242 #282A2EDE #FFFFFF #A54242 #A54242
+client.focused          #80000000 #50000000 #ffffff #27A1B9   #27A1B9
+client.focused_inactive #80000000 #50000000 #ffffff #000000   #000000
+client.unfocused        #80000000 #50000000 #888888 #000000   #000000
 client.urgent           #80000000 #50000000 #ffffff #000000   #000000
 client.placeholder      #80000000 #50000000 #ffffff #000000   #000000
 client.background       #ffffff
@@ -174,6 +173,7 @@ for_window [class="mpv"] floating enable
 for_window [class="imv"] floating enable
 for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
+for_window [class="^.*"] border pixel 1
 #for_window [class="Alacritty"] floating toggle
 
 
