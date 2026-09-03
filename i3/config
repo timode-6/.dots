@@ -136,12 +136,13 @@ bindsym $mod+r mode "resize"
 #
 # Status Bar:
 #
-exec_always --no-startup-id ~/.config/polybar/polybar.sh
+exec_always --no-startup-id bash ~/.config/polybar/polybar.sh
 
 # class                 border      backgr.     text      indicator   child_border
-client.focused          #80000000 #50000000 #ffffff #27A1B9   #27A1B9
-client.focused_inactive #80000000 #50000000 #ffffff #000000   #000000
-client.unfocused        #80000000 #50000000 #888888 #000000   #000000
+client.focused          #27A1B9 #282A2EDE #C5C8C6 #27A1B9 #27A1B9
+client.focused_inactive #4C566A #282A2EAA #888888 #4C566A #4C566A
+client.unfocused        #4C566A #282A2EAA #888888 #4C566A #4C566A
+client.urgent           #A54242 #282A2EDE #FFFFFF #A54242 #A54242
 client.urgent           #80000000 #50000000 #ffffff #000000   #000000
 client.placeholder      #80000000 #50000000 #ffffff #000000   #000000
 client.background       #ffffff
@@ -203,6 +204,14 @@ bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[
 bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
+## Brightness control
+# Increase screen brightness 
+bindsym F12 exec --no-startup-id brightnessctl set +5%
+
+# Decrease screen brightness
+bindsym F11 exec --no-startup-id brightnessctl set 5%-
+
+
 # color picker
 
 ## This will switch the current layout to the 'us'.
@@ -210,7 +219,11 @@ bindsym $mod+Shift+p exec gnome-calculator
 
 ## This keybind will lock the screen. The lockscreen.
 #bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
-bindsym $mod+l exec betterlockscreen --lock blur
+#bindsym $mod+l exec betterlockscreen --lock blur
+bindsym $mod+Shift+l exec --no-startup-id ~/.config/i3/scripts/ch-lock.sh
+
+# Wallpaper picker via rofi
+bindsym $mod+Shift+b exec --no-startup-id "$HOME/.config/rofi/rofi-wallpaper.sh && $HOME/.config/i3/scripts/update-greeter-bg.sh"
 
 ########################################################################
 ########################################################################
@@ -229,7 +242,7 @@ bindsym $mod+l exec betterlockscreen --lock blur
 exec xrandr --output HDMI-1 --mode 1920x1080 --rate 60 --scale 1x1
 #exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
 
-exec feh --bg-fill ~/.config/i3/wallpaper.jpg
+#exec feh --bg-fill ~/.config/i3/wallpaper.jpg
 
 exec --no-startup-id dunst
 exec --no-startup-id picom
@@ -245,3 +258,14 @@ smart_gaps on
 gaps outer 1
 gaps inner 1
 hide_edge_borders smart_no_gaps
+
+
+# Restore the last chosen wallpaper
+#exec_always --no-startup-id sh -c 'if [ -f "$HOME/.current_wallpaper" ]; then WP="$(cat "$HOME/.current_wallpaper")"; else WP=$(find "$HOME/Pictures/Background" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) | head -n 1); fi; [ -n "$WP" ] && feh --bg-fill "$WP" && betterlockscreen -u "$WP" --fx blur'
+exec_always --no-startup-id sh -c 'if [ -f "$HOME/.current_wallpaper" ]; then WP="$(cat "$HOME/.current_wallpaper")"; else WP=$(find "$HOME/Pictures/Background" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) | head -n 1); fi; [ -n "$WP" ] && feh --bg-fill "$WP" && betterlockscreen -u "$WP" --fx blur && "$HOME/.config/i3/scripts/update-greeter-bg.sh"'
+
+exec --no-startup-id sh -c 'echo 1 | sudo tee /sys/devices/pci0000:00/0000:00:1f.0/PNP0C09:00/VPC2004:00/conservation_mode'
+
+# Launch a clean, fully isolated Private instance of Opera
+bindsym $mod+Shift+o exec opera --user-data-dir="$HOME/.config/opera-isolated" --private
+
