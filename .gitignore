@@ -14,7 +14,9 @@
 !polybar
 !rofi
 !zathura
+!system
 
 !/cmus
 /cmus/*
 !/cmus/rc
+

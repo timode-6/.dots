@@ -1,0 +1,41 @@
+# GRUB boot loader configuration
+
+GRUB_DEFAULT=0
+GRUB_TIMEOUT='5'
+GRUB_DISTRIBUTOR='CachyOS'
+GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog nvme_load=YES zswap.enabled=0 splash loglevel=3'
+GRUB_CMDLINE_LINUX=""
+
+GRUB_PRELOAD_MODULES="part_gpt part_msdos"
+
+#GRUB_ENABLE_CRYPTODISK=y
+
+GRUB_TIMEOUT_STYLE=menu
+
+GRUB_TERMINAL_INPUT=console
+
+#GRUB_TERMINAL_OUTPUT=console
+
+GRUB_GFXMODE=1920x1080
+
+GRUB_GFXPAYLOAD_LINUX=keep
+
+#GRUB_DISABLE_LINUX_UUID=true
+
+GRUB_DISABLE_RECOVERY='true'
+
+#GRUB_COLOR_NORMAL="light-blue/black"
+#GRUB_COLOR_HIGHLIGHT="light-cyan/blue"
+
+#GRUB_BACKGROUND="/path/to/wallpaper"
+GRUB_THEME='/usr/share/grub/themes/space-isolation/theme.txt'
+
+#GRUB_INIT_TUNE="480 440 1"
+
+#GRUB_SAVEDEFAULT=true
+
+GRUB_DISABLE_SUBMENU='false'
+
+GRUB_DISABLE_OS_PROBER=false
+GRUB_EARLY_INITRD_LINUX_STOCK=''
+GRUB_TOP_LEVEL='/boot/vmlinuz-linux-cachyos'
